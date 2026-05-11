@@ -273,6 +273,12 @@ nav a:hover {
   object-fit: cover;
 }
 
+@media screen and (max-width: 475px) {
+  .tab-content {
+    overflow-x: scroll;
+  }
+}
+
 @media screen and (min-width: 768px) {
   #container {
     margin: 0 auto;
@@ -300,7 +306,6 @@ nav a:hover {
     width: 512px;
   }
 } */
-
 
 /* Footer */
 .site-footer {
@@ -342,14 +347,11 @@ nav a:hover {
   border-radius: 8px;
   padding: 8px;
 }
-/* #tab_content {
-  width: 100%;
-} */
 table {
   border-collapse: collapse;
-  /* width: 100%; */
+  width: 100%;
   color: rgb(255, 255, 255);
-  font-size: .8em;
+  font-size: 0.8em;
 }
 th,
 td {
