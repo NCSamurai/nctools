@@ -239,6 +239,46 @@ nav a:hover {
   width: 100%;
 }
 
+/* Table */
+.tabs {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  margin-top: 24px;
+}
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tab-buttons button.active {
+  background: var(--accent-color);
+}
+.tab-content {
+  border-radius: 8px;
+  padding: 8px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: rgb(255, 255, 255);
+}
+th,
+td {
+  border: 1px solid var(--main-color);
+  padding: 6px 8px;
+  text-align: center;
+}
+th {
+  background: var(--accent-color);
+  color: white;
+  text-shadow: 0px 0px 1px black;
+}
+
 /* Modals */
 #scannerModal {
   background-color: var(--secondary-color);
@@ -272,13 +312,33 @@ nav a:hover {
   height: 100% !important;
   object-fit: cover;
 }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.modal-content {
+  margin: 60px auto 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: fit-content;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
 
 @media screen and (max-width: 475px) {
   .tab-content {
     overflow-x: scroll;
   }
 }
-
 @media screen and (min-width: 768px) {
   #container {
     margin: 0 auto;
@@ -311,78 +371,4 @@ nav a:hover {
 .site-footer {
   position: relative;
   bottom: 10px;
-}
-/* ---------------------------------------------------------------------------------------------------------------- */
-
-/* Scanner modal overrides */
-
-.tabs {
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 750px;
-  margin: 0 auto;
-  margin-top: 24px;
-}
-.tab-buttons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-/* .tab-buttons button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  color: white;
-  border: 1px solid #000000;
-  background: #5f5f5f;
-  border-radius: 6px;
-  cursor: pointer;
-} */
-.tab-buttons button.active {
-  background: var(--accent-color);
-}
-.tab-content {
-  border-radius: 8px;
-  padding: 8px;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-  color: rgb(255, 255, 255);
-  font-size: 0.8em;
-}
-th,
-td {
-  border: 1px solid var(--main-color);
-  padding: 6px 8px;
-  text-align: center;
-}
-th {
-  background: var(--main-color);
-  color: white;
-  text-shadow: 0px 0px 1px black;
-}
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* height: 100%; */
-}
-.modal-content {
-  margin: 60px auto 0 auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: fit-content;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-.modal-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
 }
