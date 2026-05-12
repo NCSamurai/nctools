@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <title>Quality Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.12.3/dist/JsBarcode.all.min.js"></script>
   </head>
   <body>
     <div id="container">
@@ -29,7 +30,7 @@
             </button>
 
             <div class="form-row">
-              <div class="input-clear">
+              <div class="input-box">
                 <input
                   type="text"
                   id="ticket-num"
@@ -37,35 +38,35 @@
                   pattern="[0-9]*"
                   maxlength="20"
                 />
-              </div>
-              <div id="multiContainer">
-                <textarea id="multi" inputmode="numeric" rows="3"></textarea>
+                <textarea
+                id="multi-ticket"
+                inputmode="numeric"
+                rows="3"
+                style="display: none;"
+                ></textarea>
               </div>
             </div>
           </div>
 
           <div class="glass" id="action-box">
-            <button class="button button-confirm" id="convertTicket">
+            <button class="button button-confirm" id="convert-ticket-btn">
               Convert
             </button>
-            <button class="button button-clear" id="clear-ticket">
+            <button class="button button-clear" id="clear-all-btn">
               Clear All
             </button>
-            <button class="button" id="multi-ticket">Add Multiple</button>
+            <button class="button" id="multi-ticket-btn">Add Multiple</button>
+            <button class="button" id="copyMatricsBtn">Copy Matrics</button>
+            <button class="button" id="copyEWMBtn">Copy EWM</button>
           </div>
 
+          <button class="button" id="clearTable">Clear Table</button>
           <div class="output">
             <table id="ticketTable">
               <th>Barcode</th>
               <th>Matrics</th>
               <th>EWM</th>
               <th>Barcode</th>
-              <div id="copyContainer">
-                <button class="copy-btns" id="copyMatricsBtn">
-                  Copy Matrics
-                </button>
-                <button class="copy-btns" id="copyEWMBtn">Copy EWM</button>
-              </div>
             </table>
           </div>
         </div>
@@ -83,19 +84,18 @@
           <!-- overlay box -->
         </div>
         <div class="modal-actions">
-          <button id="cancelScan" class="cancel-btn">Cancel</button>
+          <button id="cancelScan" class="button button-clear">Cancel</button>
         </div>
       </div>
     </div>
     <div id="showBarcode" class="modal">
-      <div class="modal-content">
+      <div class="modal-content frosted-glass">
         <svg id="barcode"></svg>
         <div class="modal-actions">
-          <button id="hideBarcode" class="confirm-btn">Ok</button>
+          <button id="hideBarcode" class="button button-confirm">Ok</button>
         </div>
       </div>
     </div>
-
-    <script src="index.js"></script>
+    <script src="converter.js"></script>
   </body>
 </html>

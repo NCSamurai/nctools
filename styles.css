@@ -25,15 +25,18 @@ body {
   scrollbar-width: none;
 }
 input,
-select {
-  text-align: center;
+select,
+textarea {
+  text-align: start;
   font-size: 1.1em;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.7);
   border: 0px;
   border-radius: 5px;
-  padding: 1px;
+  padding: 5px;
+  width: 230px;
 }
-input:focus-visible {
+input:focus-visible,
+textarea:focus-visible {
   outline: none;
 }
 .wrong_chk {
@@ -178,6 +181,11 @@ nav a:hover {
   width: 100%;
   align-items: center;
 }
+.input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* Cards */
 #action-box {
@@ -236,6 +244,9 @@ nav a:hover {
 /* Components */
 #scan-ticket {
   width: fit-content;
+}
+#clearTable {
+  margin: 50px auto 10px auto;
 }
 
 /* Form */
@@ -304,6 +315,7 @@ th {
   height: 58%;
   max-width: 90%;
   background-color: rgba(0, 0, 0, 0.769);
+  margin: 10px auto;
 }
 #scannerModal .modal-actions {
   position: absolute;
@@ -347,7 +359,8 @@ th {
 }
 
 @media screen and (max-width: 475px) {
-  .tab-content {
+  .tab-content,
+  .output {
     overflow-x: scroll;
   }
 }
