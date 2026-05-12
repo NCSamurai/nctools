@@ -36,6 +36,13 @@ select {
 input:focus-visible {
   outline: none;
 }
+.wrong_chk {
+  accent-color: var(--confirm-color);
+  box-shadow: none;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
 
 /* Animations */
 .button:active {
@@ -108,9 +115,9 @@ nav a:hover {
 .button-sm {
   color: white;
   box-shadow: 0px 0px 2px black;
-  font-weight: 200;
+  font-weight: 300;
   border-radius: 4px;
-  padding: 5px;
+  /* padding: 5px; */
   margin-top: 2px;
 }
 .button-clear {
@@ -143,7 +150,6 @@ nav a:hover {
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
   color: white;
 }
-
 .hint {
   font-size: 0.6em;
   color: rgb(164, 164, 164);
@@ -165,6 +171,12 @@ nav a:hover {
   width: 40%;
   color: var(--accent-color);
   text-shadow: 0px 0px 1px rgb(0, 0, 0);
+}
+.check-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
 }
 
 /* Cards */
@@ -196,13 +208,13 @@ nav a:hover {
   margin: 0 auto;
   width: 98%;
   padding-top: 1px;
-  height: fit-content;
+  height: 100%;
 }
 
 /* Body */
 #container {
   background-color: var(--main-color);
-  height: 100vh;
+  height: 100%;
   padding: 2%;
   margin: 0 auto;
 }
@@ -244,7 +256,7 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 750px;
+  /* max-width: 750px; */
   margin: 0 auto;
   margin-top: 24px;
 }
@@ -347,17 +359,22 @@ th {
   .button {
     font-size: 1em;
   }
+  .tab-content {
+    overflow-x: scroll;
+  }
 }
 @media screen and (min-width: 1024px) {
   #container {
     margin: 0 auto;
-    width: 70%;
+    width: 901.219px;
   }
 }
 @media screen and (min-width: 1280px) {
   #container {
     margin: 0 auto;
-    /* width: 50%; */
+  }
+  .tab-content {
+    overflow-x: hidden;
   }
 }
 /* @media screen and (min-width: 1536px) {
@@ -369,6 +386,8 @@ th {
 
 /* Footer */
 .site-footer {
+  color: var(--accent-color);
+  text-shadow: 1px 1px 2px black;
   position: relative;
   bottom: 10px;
 }

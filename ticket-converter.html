@@ -2,9 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quality Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="index.css" />
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
   </head>
   <body>
     <div id="container">
@@ -21,32 +24,78 @@
         </nav>
         <div class="card" id="content-card">
           <div class="glass" id="content-box">
+            <button class="button button-scan" id="scan-ticket">
+              Scan Ticket
+            </button>
 
             <div class="form-row">
               <div class="input-clear">
-                <label class="switch">
-                  <input type="checkbox" id="toggleSwitch" />
-                  <span class="slider"></span>
-                </label>
                 <input
                   type="text"
-                  id="ticket_num"
+                  id="ticket-num"
                   inputmode="numeric"
                   pattern="[0-9]*"
                   maxlength="20"
                 />
-                <button id="convertTicket">Convert</button>
-                <button class="scan-btn" id="scan_ticket">Scan Ticket</button>
               </div>
-              <div id="multiContainer" style="display: none">
+              <div id="multiContainer">
                 <textarea id="multi" inputmode="numeric" rows="3"></textarea>
               </div>
             </div>
-
           </div>
-          <div class="output"></div>
+
+          <div class="glass" id="action-box">
+            <button class="button button-confirm" id="convertTicket">
+              Convert
+            </button>
+            <button class="button button-clear" id="clear-ticket">
+              Clear All
+            </button>
+            <button class="button" id="multi-ticket">Add Multiple</button>
+          </div>
+
+          <div class="output">
+            <table id="ticketTable">
+              <th>Barcode</th>
+              <th>Matrics</th>
+              <th>EWM</th>
+              <th>Barcode</th>
+              <div id="copyContainer">
+                <button class="copy-btns" id="copyMatricsBtn">
+                  Copy Matrics
+                </button>
+                <button class="copy-btns" id="copyEWMBtn">Copy EWM</button>
+              </div>
+            </table>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p>© 2026 Victor Garcia. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="scannerModal" class="modal">
+      <div class="modal-content">
+        <div id="scanner">
+          <div id="scanOverlay"></div>
+          <!-- overlay box -->
+        </div>
+        <div class="modal-actions">
+          <button id="cancelScan" class="cancel-btn">Cancel</button>
         </div>
       </div>
     </div>
+    <div id="showBarcode" class="modal">
+      <div class="modal-content">
+        <svg id="barcode"></svg>
+        <div class="modal-actions">
+          <button id="hideBarcode" class="confirm-btn">Ok</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
   </body>
 </html>

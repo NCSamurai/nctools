@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sheetNames.forEach((name, idx) => {
       const b = document.createElement("button");
       b.textContent = name;
-      b.className = idx === 0 ? "active button" : "";
+      b.className = idx === 0 ? "active button" : "button";
       b.addEventListener("click", () => {
         document
           .querySelectorAll(".tab-buttons button")
@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const tdAction = document.createElement("td");
       const btnRemove = document.createElement("button");
       btnRemove.textContent = "Remove";
-      btnRemove.className = " button button-sm button-clear";
+      btnRemove.className = "button button-sm button-clear";
       btnRemove.addEventListener("click", () => {
         showRemoveRowModal(name, r);
       });
