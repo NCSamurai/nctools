@@ -12,16 +12,12 @@ function toEWM(val) {
 }
 
 function convertTicket() {
-  const ticketInput = document
-    .getElementById("ticket-num")
-    .value.trim()
-    .split("\n");
   const multiInput = document
     .getElementById("multi-ticket")
     .value.trim()
     .split("\n");
 
-  const inputs = [...new Set([...ticketInput, ...multiInput])].filter(Boolean);
+  const inputs = [...new Set([...multiInput])].filter(Boolean);
 
   for (let ticket of inputs) {
     ticket = ticket.trim();
@@ -174,31 +170,31 @@ function createBarCode(val) {
   });
 }
 
-document.getElementById("multi-ticket-btn").addEventListener("click", () => {
-  let button = document.getElementById("multi-ticket-btn");
+// document.getElementById("multi-ticket-btn").addEventListener("click", () => {
+//   let button = document.getElementById("multi-ticket-btn");
 
-  const currentState = document
-    .getElementById("multi-ticket")
-    .getAttribute("style");
+//   const currentState = document
+//     .getElementById("multi-ticket")
+//     .getAttribute("style");
 
-  const isOn = currentState === "display: block;";
+//   const isOn = currentState === "display: block;";
 
-  if (isOn) {
-    document
-      .getElementById("multi-ticket")
-      .setAttribute("style", "display: none;");
-    document.getElementById("multi-ticket").value = "";
-    document.getElementById("ticket-num").removeAttribute("disabled");
-    button.innerText = "Add Multiple";
-  } else {
-    document
-      .getElementById("multi-ticket")
-      .setAttribute("style", "display: block;");
-    document.getElementById("ticket-num").value = "";
-    document.getElementById("ticket-num").setAttribute("disabled", true);
-    button.innerText = "Add Single";
-  }
-});
+//   if (isOn) {
+//     document
+//       .getElementById("multi-ticket")
+//       .setAttribute("style", "display: none;");
+//     document.getElementById("multi-ticket").value = "";
+//     document.getElementById("ticket-num").removeAttribute("disabled");
+//     button.innerText = "Add Multiple";
+//   } else {
+//     document
+//       .getElementById("multi-ticket")
+//       .setAttribute("style", "display: block;");
+//     document.getElementById("ticket-num").value = "";
+//     document.getElementById("ticket-num").setAttribute("disabled", true);
+//     button.innerText = "Add Single";
+//   }
+// });
 document.getElementById("convert-ticket-btn").addEventListener("click", () => {
   convertTicket();
 });
@@ -233,7 +229,7 @@ document.getElementById("copyEWMBtn").addEventListener("click", () => {
   copyEWM();
 });
 document.getElementById("clear-all-btn").addEventListener("click", () => {
-  document.getElementById("ticket-num").value = "";
+  // document.getElementById("ticket-num").value = "";
   document.getElementById("multi-ticket").value = "";
 });
 document.getElementById("scan-ticket").addEventListener("click", () => {

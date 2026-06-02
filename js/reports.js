@@ -2,22 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
   let html5QrCode = null;
   let scannerRunning = false;
   const state = {
-    batchNum: Number(localStorage.getItem("der2_batch")) || 1,
+    batchNum: Number(localStorage.getItem("report_batch")) || 1,
     workbook: null,
     sheets: new Set(),
   };
 
-  // --- Reset batch if date changed ---
   function checkBatchDate() {
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-    const storedDate = localStorage.getItem("der2_date");
+    const storedDate = localStorage.getItem("report_date");
 
     if (storedDate !== today) {
       state.batchNum = 1;
-      localStorage.setItem("der2_batch", "1");
-      localStorage.setItem("der2_date", today);
+      localStorage.setItem("report_batch", "1");
+      localStorage.setItem("report_date", today);
     } else {
-      state.batchNum = Number(localStorage.getItem("der2_batch")) || 1;
+      state.batchNum = Number(localStorage.getItem("report_batch")) || 1;
     }
   }
 
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function sheetFilename() {
-    return `DER2 Report ${todayLabel()}_Batch ${state.batchNum}.xlsx`;
+    return `HU Report ${todayLabel()}_Batch ${state.batchNum}.xlsx`;
   }
 
   function numericCheck(s) {
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return !/^\d+$/.test(s);
   }
 
-  function formatData(cd_data, time_data) {
+  function formatData(cd_data, time_data=null) {
     let code_date = "";
     if (cd_data.length === 6) {
       code_date = `${cd_data.slice(0, 2)}-${cd_data.slice(
@@ -71,14 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         2,
       )}-${cd_data.slice(2)}`;
     }
-
-    let timestamp = "";
-    if (time_data.length === 4) {
-      timestamp = `${time_data.slice(0, 2)}:${time_data.slice(2)}`;
-    } else {
-      timestamp = `${time_data.slice(0, 1)}:${time_data.slice(1)}`;
-    }
-    return { code_date, timestamp };
+    return code_date;
   }
 
   function initWorkbook() {
@@ -98,9 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Ticket",
         "Product Number",
         "Code Date",
+        "Layer",
         "Cases",
-        "Line",
-        "Timestamp",
       ];
       const headers =
         name === "Duplicates"
@@ -137,17 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return null;
   }
 
-  function ensureNewTicketColumn(ws) {
-    const hasNew = findColumnIndexByHeader(ws, "New Ticket");
-    if (hasNew) return;
-    const headerRow = ws.getRow(1);
-    headerRow.splice(2, 0, "New Ticket");
-    for (let r = 2; r <= ws.rowCount; r++) {
-      ws.getRow(r).splice(2, 0, "");
-    }
-  }
-
-  function addRowWithStyles(ws, rowValues, wrongSet) {
+  function addRowWithStyles(ws, rowValues, wrongSet=null) {
     const row = ws.addRow(rowValues);
     const even = row.number % 2 === 0;
     const fillEven = {
@@ -170,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cell.font = { size: 14 };
       cell.alignment = { horizontal: "center", vertical: "middle" };
       const header = ws.getRow(1).getCell(cell.col).value;
-      cell.fill = wrongSet.has(header) ? highlight : even ? fillEven : fillOdd;
     });
 
     ws.columns.forEach((col) => {
@@ -183,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Preview rendering ---
   function renderPreviews() {
     const tabs = document.getElementById("tabs");
     const btns = document.getElementById("tab_buttons");
@@ -309,26 +288,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("errors").innerHTML = "";
   }
 
-  // function flashSuccess() {
-  //   const s = document.getElementById("success");
-  //   s.style.display = "block";
-  //   setTimeout(() => {
-  //     s.style.display = "none";
-  //   }, 1500);
-  //   updateProductDropdown();
-  // }
-
   saveSession();
 
   function updateDownloadButton() {
     const btn = document.getElementById("download_btn");
     btn.disabled = state.sheets.size === 0;
     btn.textContent = btn.disabled
-      ? "Download DER2 Report"
-      : "Download DER2 Report";
+      ? "Download Report"
+      : "Download Report";
   }
 
-  // --- Persistence helpers ---
   function saveSession() {
     if (!state.workbook) return;
 
@@ -361,11 +330,11 @@ document.addEventListener("DOMContentLoaded", () => {
       data: allData,
     };
 
-    localStorage.setItem("der2_data", JSON.stringify(payload));
+    localStorage.setItem("report_data", JSON.stringify(payload));
   }
 
   function loadSession() {
-    const raw = localStorage.getItem("der2_data");
+    const raw = localStorage.getItem("report_data");
     if (!raw) return;
 
     const payload = JSON.parse(raw);
@@ -376,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const ws = getOrCreateSheet(sheetName);
         rows.forEach((rowObj) => {
           const wrongSet = new Set(rowObj.wrong || []);
-          addRowWithStyles(ws, rowObj.values, wrongSet);
+          addRowWithStyles(ws, rowObj.values);
         });
       }
       renderPreviews();
@@ -386,31 +355,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- UI bindings ---
-  const issueTypeEl = document.getElementById("issue_type");
-  const rowNewTicket = document.getElementById("row_new_ticket");
-  const rowWrongInfo = document.getElementById("row_wrong_info");
-
-  function updateConditionalFields() {
-    const val = issueTypeEl.value;
-    rowNewTicket.style.display = val === "Duplicates" ? "" : "none";
-    rowWrongInfo.style.display = val === "Wrong Information" ? "" : "none";
-    // Show/hide Scan New Ticket button
-    const scanNewBtn = document.getElementById("scan_new_ticket");
-    if (scanNewBtn) {
-      scanNewBtn.style.display = val === "Duplicates" ? "inline-block" : "none";
-    }
-  }
-
-  issueTypeEl.addEventListener("change", updateConditionalFields);
-  updateConditionalFields();
-
-  // Clear inline buttons
   document.getElementById("clear-ticket").addEventListener("click", () => {
     document.getElementById("ticket-num").value = "";
-  });
-  document.getElementById("clear_new_ticket").addEventListener("click", () => {
-    document.getElementById("new_ticket").value = "";
   });
   document.getElementById("clear_prod").addEventListener("click", () => {
     document.getElementById("prod_num").value = "";
@@ -418,14 +364,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("clear_code").addEventListener("click", () => {
     document.getElementById("code_date").value = "";
   });
+  document.getElementById("clear_layer").addEventListener("click", () => {
+    document.getElementById("layer_count").value = "";
+  });
   document.getElementById("clear_cases").addEventListener("click", () => {
     document.getElementById("case_count").value = "";
-  });
-  document.getElementById("clear_line").addEventListener("click", () => {
-    document.getElementById("line_num").value = "";
-  });
-  document.getElementById("clear_time").addEventListener("click", () => {
-    document.getElementById("timestamp").value = "";
   });
   document
     .getElementById("product_dropdown")
@@ -440,12 +383,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("clear-all").addEventListener("click", () => {
     [
       "ticket-num",
-      "new_ticket",
       "prod_num",
       "code_date",
+      "layer_count",
       "case_count",
-      "line_num",
-      "timestamp",
     ].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.value = "";
@@ -468,15 +409,15 @@ document.addEventListener("DOMContentLoaded", () => {
   cancelBtn.addEventListener("click", () => {
     modal.style.display = "none"; // hide confirmation modal
   });
-
+ 
   confirmBtn.addEventListener("click", () => {
     modal.style.display = "none"; // hide confirmation modal
 
     state.batchNum += 1;
-    localStorage.setItem("der2_batch", String(state.batchNum));
+    localStorage.setItem("report_batch", String(state.batchNum));
     state.workbook = null;
     state.sheets.clear();
-    localStorage.removeItem("der2_data"); // clear saved tickets
+    localStorage.removeItem("report_data"); // clear saved tickets
     renderPreviews();
     updateDownloadButton();
     updateProductDropdown();
@@ -502,57 +443,40 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Add ticket logic ---
   document.getElementById("add-ticket-btn").addEventListener("click", () => {
     clearErrors();
-    const issue = issueTypeEl.value;
+
     const ticket = document.getElementById("ticket-num").value.trim();
-    const newTicket = document.getElementById("new_ticket").value.trim();
     const prod = document.getElementById("prod_num").value.trim();
     const codeDateRaw = document.getElementById("code_date").value.trim();
+    const layer = document.getElementById("layer_count").value.trim();
     const cases = document.getElementById("case_count").value.trim();
-    const line = document.getElementById("line_num").value.trim();
-    const timestampRaw = document.getElementById("timestamp").value.trim();
-
-    let wrongSet = new Set();
-    if (issue === "Wrong Information") {
-      document
-        .querySelectorAll(".wrong_chk:checked")
-        .forEach((chk) => wrongSet.add(chk.value));
-    }
 
     const errs = [];
     if (numericCheck(ticket) || ticket.length !== 10)
       errs.push("Ticket must be numeric and 10 digits.");
-    if (issue === "Duplicates") {
-      if (newTicket && (numericCheck(newTicket) || newTicket.length !== 10)) {
-        errs.push("New Ticket must be numeric and 10 digits.");
-      }
-    }
-    if (numericCheck(prod) || prod.length < 12 || prod.length > 14) {
+
+    if (numericCheck(prod) || prod.length < 12 || prod.length > 14)
       errs.push("Product Number must be numeric and 12–14 digits.");
-    }
+
     if (
       numericCheck(codeDateRaw) ||
       codeDateRaw.length < 4 ||
       codeDateRaw.length > 6
-    ) {
+    ) 
       errs.push("Code Date must be numeric and 4 to 6 digits.");
-    }
-    if (numericCheck(cases)) errs.push("Cases must be numeric.");
-    if (numericCheck(line)) errs.push("Line must be numeric.");
-    if (
-      numericCheck(timestampRaw) ||
-      timestampRaw.length < 3 ||
-      timestampRaw.length > 4
-    ) {
-      errs.push("Timestamp must be numeric and 3 to 4 digits.");
-    }
+    
+    if (numericCheck(layer) && layer.length > 0)
+      errs.push("Layer must be numeric.");
+
+    if (numericCheck(cases) && cases.length > 0)
+      errs.push("Cases must be numeric.");
 
     if (errs.length) {
       showErrors(errs);
       return;
     }
 
-    const { code_date, timestamp } = formatData(codeDateRaw, timestampRaw);
-    const ws = getOrCreateSheet(issue);
+    const code_date = formatData(codeDateRaw);
+    const ws = getOrCreateSheet("HU Report");
     const msg = document.getElementById("add-ticket");
     const ticketColIdx = findColumnIndexByHeader(ws, "Ticket");
     const existingTickets = new Set();
@@ -564,14 +488,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // Save the new values temporarily
       const newRowData = {
         ticket,
-        newTicket,
         prod,
         code_date,
+        layer,
         cases,
-        line,
-        timestamp,
-        wrongSet,
-        issue,
       };
 
       // Show overwrite modal
@@ -594,22 +514,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return; // stop normal add flow
     }
 
-    if (issue === "Duplicates") ensureNewTicketColumn(ws);
-
     const headers = [];
     ws.getRow(1).eachCell((cell) => headers.push(cell.value));
     const valuesByHeader = {
       Ticket: ticket,
-      "New Ticket": newTicket || "",
       "Product Number": prod,
       "Code Date": code_date,
-      Cases: cases,
-      Line: line,
-      Timestamp: timestamp,
+      Layer: layer || 0,
+      Cases: cases || 0,
     };
     const rowVals = headers.map((h) => valuesByHeader[h] ?? "");
 
-    addRowWithStyles(ws, rowVals, wrongSet);
+    addRowWithStyles(ws, rowVals);
     renderPreviews();
     updateDownloadButton();
     flashMessage(msg);
@@ -670,22 +586,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ws.getRow(1).eachCell((cell) => headers.push(cell.value));
         const valuesByHeader = {
           Ticket: data.ticket,
-          "New Ticket": data.newTicket || "",
           "Product Number": data.prod,
           "Code Date": data.code_date,
+          Layer: data.layer,
           Cases: data.cases,
-          Line: data.line,
-          Timestamp: data.timestamp,
         };
         const rowVals = headers.map((h) => valuesByHeader[h] ?? "");
 
         // Replace row content at same index
         ws.spliceRows(r, 1);
-        addRowWithStyles(ws, rowVals, data.wrongSet || new Set());
+        addRowWithStyles(ws, rowVals || new Set());
 
         renderPreviews();
         updateDownloadButton();
-        // flashSuccess();
         updateProductDropdown();
         saveSession();
         return;
@@ -792,10 +705,6 @@ document.addEventListener("DOMContentLoaded", () => {
     startBarcodeScan("ticket-num");
   });
 
-  document.getElementById("scan_new_ticket").addEventListener("click", () => {
-    startBarcodeScan("new_ticket");
-  });
-
   document.getElementById("cancelScan").addEventListener("click", () => {
     Quagga.stop();
     Quagga.offDetected();
@@ -810,7 +719,6 @@ function flashMessage(msg) {
     msg.classList.remove("show");
   }, 2000);
 }
-
 function fadeInMessage(msg) {
   msg.classList.add("fade");
 
@@ -820,3 +728,25 @@ function fadeInMessage(msg) {
   }, 15000);
 }
 
+// function toggleTicketMode() {
+//   const issue = document.getElementById("issue-row");
+//   const layer = document.getElementById("layer-row");
+//   const line = document.getElementById("line-row");
+//   const time = document.getElementById("time-row");
+//   let lineIsDisabled = line.getAttribute("style") == "display: none;";
+  
+//   if (!lineIsDisabled) {
+//     issue.setAttribute("style", "display: none;");
+//     line.setAttribute("style", "display: none;");
+//     line.setAttribute("disabled", "true");
+//     time.setAttribute("style", "display: none;");
+//     time.setAttribute("disabled", "true");
+//   } else {
+//     issue.setAttribute("style", "display: flex;");
+//     line.setAttribute("style", "display: block;");
+//     line.setAttribute("disabled", "false");
+//     time.setAttribute("style", "display: block;");
+//     time.setAttribute("disabled", "false");
+//   }
+// }
+// document.getElementById("toggle-mode-btn").addEventListener("click", toggleTicketMode);

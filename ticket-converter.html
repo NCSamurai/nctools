@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Quality Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
@@ -19,30 +19,30 @@
               <a href="index.html">DER2 Report</a>
             </li>
             <li>
+              <a href="hu-report.html">HU Report</a>
+            </li>
+            <li>
               <a href="ticket-converter.html">Ticket Converter</a>
+            </li>
+            <li>
+              <a href="pi-doc.html">PI Documents</a>
             </li>
           </ul>
         </nav>
         <div class="card" id="content-card">
           <div class="glass" id="content-box">
-            <button class="button button-scan" id="scan-ticket">
-              Scan Ticket
-            </button>
+            <div id="scanner-btn">
+              <button class="button button-scan" id="scan-ticket">
+                Scan Ticket
+              </button>
+            </div>
 
             <div class="form-row">
               <div class="input-box">
-                <input
-                  type="text"
-                  id="ticket-num"
-                  inputmode="numeric"
-                  pattern="[0-9]*"
-                  maxlength="20"
-                />
                 <textarea
-                id="multi-ticket"
-                inputmode="numeric"
-                rows="3"
-                style="display: none;"
+                  id="multi-ticket"
+                  inputmode="numeric"
+                  rows="3"
                 ></textarea>
               </div>
             </div>
@@ -55,7 +55,7 @@
             <button class="button button-clear" id="clear-all-btn">
               Clear All
             </button>
-            <button class="button" id="multi-ticket-btn">Add Multiple</button>
+            <!-- <button class="button" id="multi-ticket-btn">Add Multiple</button> -->
             <button class="button" id="copyMatricsBtn">Copy Matrics</button>
             <button class="button" id="copyEWMBtn">Copy EWM</button>
           </div>
@@ -96,6 +96,7 @@
         </div>
       </div>
     </div>
-    <script src="converter-live.js"></script>
+    <script src="live/converter-live.js"></script>
+    <!-- <script src="js/converter.js"></script> -->
   </body>
 </html>

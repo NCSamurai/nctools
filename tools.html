@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quality Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.12.3/dist/JsBarcode.all.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="card" id="nav-card">
+        <nav>
+          <ul class="nav">
+            <li>
+              <a href="index.html">DER2 Report</a>
+            </li>
+            <li>
+              <a href="hu-report.html">HU Report</a>
+            </li>
+            <li>
+              <a href="ticket-converter.html">Ticket Converter</a>
+            </li>
+            <li>
+              <a href="pi-doc.html">PI Documents</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="card" id="content-card">
+          <h3>PDF Unlock</h3>
+          <div class="glass" id="content-box">
+            <div class="form-row">
+              <input
+                class="button"
+                type="file"
+                id="pdfInput"
+                accept=".pdf"
+                multiple
+              />
+              <div id="downloads"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <h3>PI Automation</h3>
+            <input type="file" class="button" id="excelInput" accept=".xlsx" />
+          </div>
+          <div class="glass" id="action-box">
+            <button class="button button-confirm" id="start-auto">Start</button>
+            <button class="button button-clear" id="stop-auto">Stop</button>
+            <!-- <button class="button" id="sortAsc">Ascending</button> -->
+            <!-- <button class="button" id="sortDesc">Descending</button> -->
+          </div>
+          <div class="glass" id="section-content"></div>
+
+          <div class="card glass" id="piOrders">
+            <div class="output">
+              <table id="piTable"></table>
+            </div>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p>© 2026 Victor Garcia. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="scannerModal" class="modal">
+      <div class="modal-content">
+        <div id="scanner">
+          <div id="scanOverlay"></div>
+          <!-- overlay box -->
+        </div>
+        <div class="modal-actions">
+          <button id="cancelScan" class="button button-clear">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="showBarcode" class="modal">
+      <div class="modal-content frosted-glass">
+        <svg id="barcode"></svg>
+        <div class="modal-actions">
+          <button id="previous" class="button button-confirm">Previous</button>
+          <button id="next" class="button button-confirm">Next</button>
+        </div>
+      </div>
+    </div>
+    <div id="sectionComplete" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>Section Complete?</h2>
+        <div class="modal-actions">
+          <button id="taskCancel" class="button button-clear">Cancel</button>
+          <button id="taskComplete" class="button button-confirm">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="/live/tools-live.js"></script> -->
+    <script src="/js/tools.js"></script>
+  </body>
+</html>
