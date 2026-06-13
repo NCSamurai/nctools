@@ -26,29 +26,45 @@ function generateBarCode(val) {
   });
 }
 function waitForClick(next, previous) {
+  const copy = document.getElementById("copy-wo");
+  const close = document.getElementById("cancelX-btn");
+
   return new Promise((resolve) => {
     const nextHandler = () => {
       cleanup();
       resolve("next");
     };
-    
     const prevHandler = () => { 
       cleanup();
       resolve("previous");
+    };
+    const copyHandler = () => {
+      cleanup();
+      resolve("copy");
+    };
+    const closeHandler = () => {
+      cleanup();
+      resolve("close");
     };
 
     function cleanup() {
       next.removeEventListener("click", nextHandler);
       previous.removeEventListener("click", prevHandler);
+      copy.removeEventListener("click", copyHandler);
+      close.removeEventListener("click", closeHandler);
     }
 
     next.addEventListener("click", nextHandler);
     previous.addEventListener("click", prevHandler);
+    copy.addEventListener("click", copyHandler);
+    close.addEventListener("click", closeHandler);
   });
 }
 async function woAutomation(warehouseOrders) {
   const next = document.getElementById("next");
   const prev = document.getElementById("previous");
+  const copy = document.getElementById("copy-wo");
+  const close = document.getElementById("cancelX-btn");
 
   let index = 0;
 
@@ -57,7 +73,7 @@ async function woAutomation(warehouseOrders) {
     const currentBin = document.getElementById(warehouseOrders[index]);
     currentBin.style.backgroundColor = "#5b0000";
     const action = await waitForClick(next, prev);
-    
+
     if (action === "next") {
       currentBin.style.backgroundColor = "#004e03";
       index++;
@@ -65,6 +81,13 @@ async function woAutomation(warehouseOrders) {
     if (action === "previous") {
       currentBin.style.backgroundColor = "inherit";
       index--;
+    }
+    if (action === "copy") {
+      navigator.clipboard.writeText(currentBin.getAttribute("id"));
+    }
+    if (action === "close") {
+      document.getElementById("showBarcode").style.display = "none";
+      return;
     }
   }
   document.getElementById("showBarcode").style.display = "none";
@@ -83,10 +106,7 @@ async function woAutomation(warehouseOrders) {
     document.getElementById("sectionComplete").style.display = "none";
 }
 
-// const pdfInput = document.getElementById("pdfInput");
 const excelInput = document.getElementById("excelInput");
-// const downloads = document.getElementById("downloads");
-// const downloadBtn = document.getElementById("downloadBtn");
 const piTable = document.getElementById("piTable");
 const start = document.getElementById("start-auto");
 const stop = document.getElementById("stop-auto");
@@ -155,7 +175,4 @@ start.addEventListener("click", () => {
     (el) => el.innerHTML,
   );
   woAutomation(warehouseOrders);
-});
-stop.addEventListener("click", () => { 
-  document.getElementById("showBarcode").style.display = "none";
 });

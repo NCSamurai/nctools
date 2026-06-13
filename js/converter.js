@@ -233,7 +233,7 @@ document.getElementById("clear-all-btn").addEventListener("click", () => {
   document.getElementById("multi-ticket").value = "";
 });
 document.getElementById("scan-ticket").addEventListener("click", () => {
-  startBarcodeScan("ticket-num");
+  startBarcodeScan("multi-ticket");
 });
 document.getElementById("cancelScan").addEventListener("click", () => {
   Quagga.stop();

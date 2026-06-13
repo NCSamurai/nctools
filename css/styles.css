@@ -198,6 +198,24 @@ nav a:hover {
   width: 20px;
   cursor: pointer;
 }
+.site-info {
+  color: rgba(255, 255, 255, 0.781);
+}
+.cancelX {
+  display: flex;
+  justify-content: flex-end; 
+}
+.cancelX button{
+  background-color: var(--accent-color);
+  border-radius: 100px;
+  border-width: 0px;
+  box-shadow: 0px 0px 0px 1px black;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  width: 10%;
+  color: white;
+  text-shadow: .5px .5px black;
+}
 
 /* Cards */
 #action-box,
@@ -255,6 +273,10 @@ nav a:hover {
 }
 
 /* Components */
+#excelInput {
+  align-items: center;
+  width: 268.656px;
+}
 #pdfInput {
   width: 52%;
   text-align: center;
@@ -308,7 +330,10 @@ svg.barcode {
   max-width: 380px; 
   max-height: 102px;
 }
-
+.site-info a {
+  color: var(--function-color);
+  text-decoration: none;
+}
 
 /* Form */
 .form-row {

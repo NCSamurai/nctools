@@ -34,11 +34,11 @@
         <div class="card" id="content-card">
           <div class="form-row">
             <h3>PI Automation</h3>
-            <input type="file" class="button" id="excelInput" accept=".xlsx" />
+            <input type="file" class="" id="excelInput" accept=".xlsx"/>
           </div>
           <div class="glass" id="action-box">
             <button class="button button-confirm" id="start-auto">Start</button>
-            <button class="button button-clear" id="stop-auto">Stop</button>
+            <!-- <button class="button button-clear" id="stop-auto">Stop</button> -->
             <!-- <button class="button" id="sortAsc">Ascending</button> -->
             <!-- <button class="button" id="sortDesc">Descending</button> -->
           </div>
@@ -57,22 +57,13 @@
     </div>
 
     <!-- Modals -->
-    <div id="scannerModal" class="modal">
-      <div class="modal-content">
-        <div id="scanner">
-          <div id="scanOverlay"></div>
-          <!-- overlay box -->
-        </div>
-        <div class="modal-actions">
-          <button id="cancelScan" class="button button-clear">Cancel</button>
-        </div>
-      </div>
-    </div>
     <div id="showBarcode" class="modal">
       <div class="modal-content frosted-glass">
+        <div class="cancelX"><button id="cancelX-btn">X</button></div>
         <svg id="barcode"></svg>
         <div class="modal-actions">
-          <button id="previous" class="button button-confirm">Previous</button>
+          <button id="previous" class="button">Previous</button>
+          <button id="copy-wo" class="button button-scan">Copy</button>
           <button id="next" class="button button-confirm">Next</button>
         </div>
       </div>
