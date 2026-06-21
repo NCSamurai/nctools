@@ -1,17 +1,23 @@
-function generateList(bin, wo) {
+function generateList(bin, wo, pi) {
   const piTable = document.getElementById("piTable");
   const tr = document.createElement("tr");
   tr.setAttribute("id", wo);
 
   const binContent = document.createElement("td");
+  binContent.className = "bin";
   binContent.innerText = bin;
 
   const woContent = document.createElement("td");
   woContent.className = "wo";
   woContent.innerText = wo;
 
+  const piContent = document.createElement("td");
+  piContent.innerText = pi;
+
   tr.appendChild(binContent);
   tr.appendChild(woContent);
+  tr.appendChild(piContent);
+
   piTable.appendChild(tr);
 }
 function generateBarCode(val) {
@@ -34,7 +40,7 @@ function waitForClick(next, previous) {
       cleanup();
       resolve("next");
     };
-    const prevHandler = () => { 
+    const prevHandler = () => {
       cleanup();
       resolve("previous");
     };
@@ -92,7 +98,7 @@ async function woAutomation(warehouseOrders) {
   }
   document.getElementById("showBarcode").style.display = "none";
   document.getElementById("sectionComplete").style.display = "block";
-  
+
   const done = document.getElementById("taskComplete");
   const cancel = document.getElementById("taskCancel");
 
@@ -105,11 +111,20 @@ async function woAutomation(warehouseOrders) {
   if (confirmation === "previous")
     document.getElementById("sectionComplete").style.display = "none";
 }
+function copyAllBins() {
+  const values = [...document.querySelectorAll(".bin")].map(
+    (el) => el.innerHTML,
+  );
+  const bins = values.join("\n");
+
+  navigator.clipboard.writeText(bins);
+}
 
 const excelInput = document.getElementById("excelInput");
 const piTable = document.getElementById("piTable");
 const start = document.getElementById("start-auto");
-const stop = document.getElementById("stop-auto");
+const copyBins = document.getElementById("copy-bins");
+const order = document.getElementById("changeOrder");
 const tasks = new Map();
 let output;
 let currentSection;
@@ -122,17 +137,23 @@ excelInput.addEventListener("change", async (e) => {
   const workbook = XLSX.read(buffer, { type: "array" });
   const sheetName = workbook.SheetNames[0];
   const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+  data.sort((a, b) => {
+    if (a["Storage Bin"] < b["Storage Bin"]) return -1;
+    if (a["Storage Bin"] > b["Storage Bin"]) return 1;
+    return 0;
+  });
   let sectionList = new Set();
 
   for (let row = 0; row < data.length; row++) {
-    if (data[row]["Storage Bin"] === "") break;
-
+    if (data[row]["Storage Bin"] === undefined) break;
+      
     const bin = data[row]["Storage Bin"];
     const order = data[row]["Warehouse Order"];
+    const pi = data[row]["Physical Inventory Document"];
     const section = bin.slice(0, 3);
 
     sectionList.add(section);
-    tasks.set(bin, order);
+    tasks.set(bin, [order, pi]);
   }
   for (let section of sectionList) {
     const content = document.getElementById("section-content");
@@ -156,23 +177,59 @@ document.addEventListener("click", (e) => {
     thBin.innerText = "Bin";
     const thWo = document.createElement("th");
     thWo.innerText = "Warehouse Order";
-    const thBarcode = document.createElement("th");
-    thBarcode.innerText = "Barcode";
+    const thPi = document.createElement("th");
+    thPi.innerText = "PI Document";
 
     piTable.appendChild(thBin);
     piTable.appendChild(thWo);
+    piTable.appendChild(thPi);
 
     for (let key of taskSections) {
       const bin = key.slice(0, 3);
+      const val = tasks.get(key);
       if (bin === section) {
-        generateList(key, tasks.get(key));
+        generateList(key, val[0], val[1]);
       }
     }
   }
 });
+
+
+// Action Bar Functions
 start.addEventListener("click", () => {
   const warehouseOrders = [...document.querySelectorAll(".wo")].map(
     (el) => el.innerHTML,
   );
   woAutomation(warehouseOrders);
+});
+copyBins.addEventListener("click", () => {
+  copyBins.classList.remove("active");
+  void copyBins.offsetWidth;
+  copyBins.classList.add("active");
+  copyAllBins();
+});
+order.addEventListener("click", () => {
+  const values = [...document.querySelectorAll(".bin")]
+    .map((el) => el.innerHTML).reverse();
+
+  piTable.innerHTML = "";
+
+  const thBin = document.createElement("th");
+  thBin.innerText = "Bin";
+  const thWo = document.createElement("th");
+  thWo.innerText = "Warehouse Order";
+  const thPi = document.createElement("th");
+  thPi.innerText = "PI Document";
+
+  piTable.appendChild(thBin);
+  piTable.appendChild(thWo);
+  piTable.appendChild(thPi);
+
+  for (let key of values) {
+    const bin = key.slice(0, 3);
+    const val = tasks.get(key);
+    if (bin === currentSection) {
+      generateList(key, val[0], val[1]);
+    }
+  }
 });

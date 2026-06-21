@@ -224,7 +224,7 @@ nav a:hover {
   display: flex;
   justify-content: space-around;
   height: 50px;
-  margin: 0 auto;
+  margin: 10px auto;
   width: 97%;
 }
 #content-card {
@@ -273,7 +273,8 @@ nav a:hover {
 }
 
 /* Components */
-#excelInput {
+#excelInput,
+#pdfInput {
   align-items: center;
   width: 268.656px;
 }
