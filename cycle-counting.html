@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quality Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.12.3/dist/JsBarcode.all.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="card" id="nav-card">
+        <nav>
+          <ul class="nav">
+            <li>
+              <a href="index.html">DER2 Report</a>
+            </li>
+            <li>
+              <a href="ticket-converter.html">Ticket Converter</a>
+            </li>
+            <li>
+              <a href="pi-doc.html">PI Documents</a>
+            </li>
+            <li>
+              <a href="cycle-counting.html">Cycle Count Report</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="card" id="content-card">
+          <div class="msg error fade-in" id="errors"></div>
+          <div class="msg success" id="lastUpdated"></div>
+          <div class="side-by-side">
+            <div class="form-row">
+              <h3><button id="updateLoc"></button>Locations</h3>
+              <input type="file" class="" id="excelInput" accept=".xlsx" disabled/>
+            </div>
+            <div class="form-row">
+              <h3>Update Report</h3>
+              <input type="file" class="" id="completeInput" accept=".xlsx" />
+            </div>
+          </div>
+          <!-- <div class="glass" id="action-box"> -->
+          <!-- <button class="button button-confirm" id="start-auto">Start</button> -->
+          <!-- <button class="button" id="copy-bins">Copy All Bins</button> -->
+          <!-- <button class="button" id="changeOrder">Change Order</button> -->
+          <!-- </div> -->
+          <div class="glass" id="section-content"></div>
+          <div class="card glass" id="">
+            <div class="output">
+              <table id="cycleTable"></table>
+            </div>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p>© 2026 Victor Garcia. All rights reserved.</p>
+          <p class="site-info">
+            This site is for testing and development. Please go to the live
+            website at:
+            <a href="https://ncsamurai.github.io/qtools/">Quality Tools</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="locTrigger" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>Password</h2>
+        <div class="modal-actions">
+          <input type="password" id="locPass" maxlength="24" />
+          <button type="submit" id="locSubmit" class="button button-confirm">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div id="updateTrigger" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>Password</h2>
+        <div class="modal-actions">
+          <input type="password" id="updatePass" maxlength="24" />
+          <button type="submit" id="updateSubmit" class="button button-confirm">Submit</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="live/cycle-live.js"></script>
+    <!-- <script type="module" src="js/cycle.js"></script> -->
+  </body>
+</html>

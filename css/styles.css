@@ -216,6 +216,9 @@ nav a:hover {
   color: white;
   text-shadow: .5px .5px black;
 }
+.side-by-side {
+  display: flex;
+}
 
 /* Cards */
 #action-box,
@@ -273,14 +276,15 @@ nav a:hover {
 }
 
 /* Components */
+#comment-box,
+#lan-id {
+  width: 303px;
+}
 #excelInput,
-#pdfInput {
+#pdfInput,
+#completeInput {
   align-items: center;
   width: 268.656px;
-}
-#pdfInput {
-  width: 52%;
-  text-align: center;
 }
 #scan-ticket {
   width: fit-content;
@@ -334,6 +338,10 @@ svg.barcode {
 .site-info a {
   color: var(--function-color);
   text-decoration: none;
+}
+#updateLoc {
+  background-color: var(--secondary-color);
+  border: none;
 }
 
 /* Form */

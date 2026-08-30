@@ -18,17 +18,21 @@
               <a href="index.html">DER2 Report</a>
             </li>
             <li>
-              <a href="hu-report.html">HU Report</a>
-            </li>
-            <li>
               <a href="ticket-converter.html">Ticket Converter</a>
             </li>
             <li>
               <a href="pi-doc.html">PI Documents</a>
             </li>
+            <li>
+              <a href="cycle-counting.html">Cycle Count Report</a>
+            </li>
           </ul>
         </nav>
         <div class="card" id="content-card">
+          <div class="nav">
+            <a href="hu-report.html">HU Report</a>
+            <a href="violation.html">DER2 Violations</a>
+          </div>
           <!-- <label class="toggle">
             Ticket Mode
             <input type="checkbox" id="toggle-mode-btn" />
@@ -55,18 +59,18 @@
               <label for="ticket-num">Ticket Number</label>
               <div class="input-clear">
                 <input
-                type="text"
-                id="ticket-num"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                maxlength="10"
+                  type="text"
+                  id="ticket-num"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="10"
                 />
                 <button class="button button-clear button-sm" id="clear-ticket">
                   Clear
                 </button>
               </div>
             </div>
-            
+
             <div class="form-row" id="row_new_ticket" style="display: none">
               <label for="new_ticket">New Ticket Number</label>
               <div class="input-clear">
@@ -237,6 +241,11 @@
         </div>
         <footer class="site-footer">
           <p>© 2026 Victor Garcia. All rights reserved.</p>
+          <p class="site-info">
+            This site is for testing and development. Please go to the live
+            website at:
+            <a href="https://ncsamurai.github.io/qtools/">Quality Tools</a>
+          </p>
         </footer>
       </div>
     </div>

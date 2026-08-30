@@ -36,31 +36,12 @@
           <div class="glass" id="content-box">
             <div class="form-row">
               <input
-                class="button"
                 type="file"
                 id="pdfInput"
                 accept=".pdf"
                 multiple
               />
               <div id="downloads"></div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <h3>PI Automation</h3>
-            <input type="file" class="button" id="excelInput" accept=".xlsx" />
-          </div>
-          <div class="glass" id="action-box">
-            <button class="button button-confirm" id="start-auto">Start</button>
-            <button class="button button-clear" id="stop-auto">Stop</button>
-            <!-- <button class="button" id="sortAsc">Ascending</button> -->
-            <!-- <button class="button" id="sortDesc">Descending</button> -->
-          </div>
-          <div class="glass" id="section-content"></div>
-
-          <div class="card glass" id="piOrders">
-            <div class="output">
-              <table id="piTable"></table>
             </div>
           </div>
         </div>
@@ -71,37 +52,7 @@
     </div>
 
     <!-- Modals -->
-    <div id="scannerModal" class="modal">
-      <div class="modal-content">
-        <div id="scanner">
-          <div id="scanOverlay"></div>
-          <!-- overlay box -->
-        </div>
-        <div class="modal-actions">
-          <button id="cancelScan" class="button button-clear">Cancel</button>
-        </div>
-      </div>
-    </div>
-    <div id="showBarcode" class="modal">
-      <div class="modal-content frosted-glass">
-        <svg id="barcode"></svg>
-        <div class="modal-actions">
-          <button id="previous" class="button button-confirm">Previous</button>
-          <button id="next" class="button button-confirm">Next</button>
-        </div>
-      </div>
-    </div>
-    <div id="sectionComplete" class="modal">
-      <div class="modal-content frosted-glass">
-        <h2>Section Complete?</h2>
-        <div class="modal-actions">
-          <button id="taskCancel" class="button button-clear">Cancel</button>
-          <button id="taskComplete" class="button button-confirm">
-            Confirm
-          </button>
-        </div>
-      </div>
-    </div>
+
     <!-- <script src="/live/tools-live.js"></script> -->
     <script src="/js/tools.js"></script>
   </body>
