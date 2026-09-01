@@ -219,6 +219,12 @@ nav a:hover {
 .side-by-side {
   display: flex;
 }
+.label {
+  color: white;
+}
+.info {
+  font-weight: bold;
+}
 
 /* Cards */
 #action-box,
