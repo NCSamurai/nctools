@@ -123,7 +123,8 @@ nav a:hover {
 .button-clear {
   border-color: var(--accent-color);
 }
-.button-scan {
+.button-scan,
+.button-function {
   border-color: var(--function-color);
 }
 .button-confirm {
@@ -225,6 +226,10 @@ nav a:hover {
 .info {
   font-weight: bold;
 }
+/* .prompt-box {
+  display: flex;
+  flex-direction: column;
+} */
 
 /* Cards */
 #action-box,
@@ -464,6 +469,9 @@ th {
   .tab-content,
   .output {
     overflow-x: scroll;
+  }
+  .side-by-side {
+    flex-direction: column;
   }
 }
 @media screen and (min-width: 768px) {
