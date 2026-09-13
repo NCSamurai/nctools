@@ -95,6 +95,13 @@ nav a:hover {
 } */
 
 /* Classes */
+.chart-glass {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(87, 85, 85, 0.35);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.35);
+}
 .links {
   text-decoration: none;
   color: var(--confirm-color);
@@ -204,9 +211,9 @@ nav a:hover {
 }
 .cancelX {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
 }
-.cancelX button{
+.cancelX button {
   background-color: var(--accent-color);
   border-radius: 100px;
   border-width: 0px;
@@ -215,7 +222,7 @@ nav a:hover {
   margin-bottom: 10px;
   width: 10%;
   color: white;
-  text-shadow: .5px .5px black;
+  text-shadow: 0.5px 0.5px black;
 }
 .side-by-side {
   display: flex;
@@ -343,7 +350,7 @@ nav a:hover {
   outline-offset: 3px;
 }
 svg.barcode {
-  max-width: 380px; 
+  max-width: 380px;
   max-height: 102px;
 }
 .site-info a {
@@ -351,8 +358,12 @@ svg.barcode {
   text-decoration: none;
 }
 #updateLoc {
-  background-color: var(--secondary-color);
-  border: none;
+  margin-right: 10px;
+  height: 15px;
+}
+.login {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Form */
@@ -473,6 +484,12 @@ th {
   .side-by-side {
     flex-direction: column;
   }
+  .nav {
+    flex-direction: column;
+  }
+  .nav-element {
+    margin-bottom: 5px;
+  }
 }
 @media screen and (min-width: 768px) {
   #container {
@@ -506,12 +523,6 @@ th {
     overflow-x: hidden;
   }
 }
-/* @media screen and (min-width: 1536px) {
-  #container {
-    margin: 0 auto;
-    width: 512px;
-  }
-} */
 
 /* Footer */
 .site-footer {
@@ -519,4 +530,32 @@ th {
   text-shadow: 1px 1px 2px black;
   position: relative;
   bottom: 10px;
+}
+
+/* Chart */
+.chart-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-container::-webkit-scrollbar {
+  height: 14px;
+}
+
+.chart-container::-webkit-scrollbar-thumb {
+  background: rgba(14, 13, 13, 0.3);
+  border-radius: 14px;
+}
+
+.chart-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+#aisleChartCanvas {
+  display: block;
+  margin: 0 auto;
 }

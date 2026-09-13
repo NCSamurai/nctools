@@ -2,14 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <title>Quality Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script> -->
+    <!--Scanning Barcodes-->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.12.3/dist/JsBarcode.all.min.js"></script>
+    <!--Uploading PDFs-->
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <!-- XLSX Library-->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   </head>
   <body>
@@ -17,17 +22,17 @@
       <div class="card" id="nav-card">
         <nav>
           <ul class="nav">
-            <li>
-              <a href="index.html">DER2 Report</a>
+            <li class="nav-element">
+              <a href="index.html">DER2</a>
             </li>
-            <li>
-              <a href="ticket-converter.html">Ticket Converter</a>
+            <li class="nav-element">
+              <a href="ticket-converter.html">HU Converter</a>
             </li>
-            <li>
+            <li class="nav-element">
               <a href="pi-doc.html">PI Documents</a>
             </li>
-            <li>
-              <a href="cycle-counting.html">Cycle Count Report</a>
+            <li class="nav-element">
+              <a href="cycle-counting.html">Cycle Count</a>
             </li>
           </ul>
         </nav>
@@ -79,6 +84,5 @@
       </div>
     </div>
     <script src="live/pi-auto-live.js"></script>
-    <!-- <script src="js/pi-auto.js"></script> -->
   </body>
 </html>

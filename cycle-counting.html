@@ -2,53 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>Quality Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.12.3/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   </head>
   <body>
     <div id="container">
       <div class="card" id="nav-card">
         <nav>
           <ul class="nav">
-            <li>
-              <a href="index.html">DER2 Report</a>
+            <li class="nav-element">
+              <a href="index.html">DER2</a>
             </li>
-            <li>
-              <a href="ticket-converter.html">Ticket Converter</a>
+            <li class="nav-element">
+              <a href="ticket-converter.html">HU Converter</a>
             </li>
-            <li>
+            <li class="nav-element">
               <a href="pi-doc.html">PI Documents</a>
             </li>
-            <li>
-              <a href="cycle-counting.html">Cycle Count Report</a>
+            <li class="nav-element">
+              <a href="cycle-counting.html">Cycle Count</a>
             </li>
           </ul>
         </nav>
         <div class="card" id="content-card">
           <div class="msg error fade-in" id="errors"></div>
           <div class="msg success" id="lastUpdated"></div>
-          <div class="msg success" id="percentCompleted"></div>
-          <div class="side-by-side">
-            <div class="form-row">
-              <h3><button id="updateLoc"></button>Locations</h3>
-              <input type="file" class="" id="excelInput" accept=".xlsx" disabled/>
-            </div>
-            <div class="form-row">
-              <h3>Update Report</h3>
-              <input type="file" class="" id="completeInput" accept=".xlsx" />
+
+           <h3>Cycle Count Report:</h3>
+           <div class="msg success" id="percentCompleted"></div>
+          <div class="chart-wrapper chart-glass">
+            <div class="chart-container">
+              <canvas id="aisleChartCanvas"></canvas>
             </div>
           </div>
+
           <div class="glass" id="action-box">
-          <button class="button button-function" id="copy-odd-side">Copy Odd Side</button>
-          <button class="button" id="copy-all">Copy All</button>
-          <button class="button button-function" id="copy-even-side">Copy Even Side</button>
+            <button class="button button-function" id="copy-odd-side">
+              Copy Odd Side
+            </button>
+            <button class="button" id="copy-all">Copy All</button>
+            <button class="button button-function" id="copy-even-side">
+              Copy Even Side
+            </button>
           </div>
           <div class="glass" id="section-content"></div>
           <div class="card glass" id="">
@@ -62,27 +67,23 @@
         </footer>
       </div>
     </div>
-
     <!-- Modals -->
-    <div id="locTrigger" class="modal">
-      <div class="modal-content frosted-glass">
-        <h2>Password</h2>
-        <div class="modal-actions">
-          <input type="password" id="locPass" maxlength="24" />
-          <button type="submit" id="locSubmit" class="button button-confirm">Submit</button>
-        </div>
-      </div>
-    </div>
     <div id="updateTrigger" class="modal">
       <div class="modal-content frosted-glass">
-        <h2>Password</h2>
+        <div class="login">
+          <h2>Admin:</h2>
+          <label for="adminEmail">Email</label>
+          <input type="email" id="adminEmail" maxlength="24" />
+          <label for="adminPass">Password</label>
+          <input type="password" id="adminPass" maxlength="69" />
+        </div>
         <div class="modal-actions">
-          <input type="password" id="updatePass" maxlength="24" />
-          <button type="submit" id="updateSubmit" class="button button-confirm">Submit</button>
+          <button type="submit" id="updateSubmit" class="button button-confirm">
+            Submit
+          </button>
         </div>
       </div>
     </div>
     <script type="module" src="live/cycle-live.js"></script>
-    <!-- <script type="module" src="js/cycle.js"></script> -->
   </body>
 </html>
