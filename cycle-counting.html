@@ -2,18 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <title>Quality Tools</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/styles.css" />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.12.3/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Chart back-up -->
+    <script>
+      function loadCdnChart() {
+        let s = document.createElement('script');
+        s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+        document.head.appendChild(s);
+      }
+      window.addEventListener("load", function(){
+        if (typeof Chart === "undefined") {
+          loadCdnChart();
+        }
+      });
+    </script>
+    <script src="js/chart.umd.min.js" onerror="loadCdnChart()"></script>
   </head>
   <body>
     <div id="container">
@@ -37,7 +47,6 @@
         <div class="card" id="content-card">
           <div class="msg error fade-in" id="errors"></div>
           <div class="msg success" id="lastUpdated"></div>
-
            <h3>Cycle Count Report:</h3>
            <div class="msg success" id="percentCompleted"></div>
           <div class="chart-wrapper chart-glass">
