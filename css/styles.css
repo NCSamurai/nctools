@@ -199,7 +199,8 @@ nav a:hover {
   cursor: pointer;
   user-select: none;
 }
-.wrong_chk {
+.wrong_chk,
+.rejected {
   accent-color: var(--confirm-color);
   box-shadow: none;
   height: 20px;
@@ -294,6 +295,44 @@ nav a:hover {
 }
 
 /* Components */
+#leader-container {
+  position: relative;
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(5, auto);
+  gap: 10px;
+}
+.tile {
+  width: 90%;
+  padding: 12px;
+  background: var(--main-color);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.5s ease;
+  will-change: transform;
+  font-weight: 600;
+  text-align: center;
+}
+.tile.gold {
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  color: #222;
+}
+.tile.silver {
+  background: linear-gradient(135deg, #c0c0c0, #a8a8a8);
+  color: #222;
+}
+.tile.bronze {
+  background: linear-gradient(135deg, #cd7f32, #b87333);
+  color: #fff;
+}
 #comment-box,
 #lan-id {
   width: 303px;
@@ -307,10 +346,16 @@ nav a:hover {
 #scan-ticket {
   width: fit-content;
 }
-#scanner-btn {
+#scanner-btn,
+#der-scanner {
   display: flex;
   justify-content: flex-end;
+  margin-left: 60px;
 }
+#der-scanner {
+  justify-content: space-between;
+}
+
 #clearTable {
   margin: 50px auto 10px auto;
 }
