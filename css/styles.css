@@ -281,6 +281,12 @@ nav a:hover {
 }
 
 /* Navigation */
+#banner {
+  border-radius: 30px;
+  width: 98%;
+  box-shadow: 0px 0px 3px 1px black;
+  margin-top: 3px;
+}
 .nav {
   display: flex;
   justify-content: space-around;
