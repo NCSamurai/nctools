@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <title>HU Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="card" id="nav-card">
+        <nav>
+          <ul class="nav">
+            <li class="nav-element">
+              <a href="hu-report.html">HU Report</a>
+            </li>
+            <li class="nav-element">
+              <a href="index.html">HU Convert</a>
+            </li>
+            <!-- <li class="nav-element">
+              <a href="pi-doc.html">PI Documents</a>
+            </li>
+            <li class="nav-element">
+              <a href="cycle-counting.html">Cycle Count</a>
+            </li> -->
+          </ul>
+        </nav>
+         <ul class="logo site-footer">
+          <li class="site-footer">N</li>
+          <li class="site-footer">C</li>
+          <li class="site-footer">T</li>
+          <li class="site-footer">O</li>
+          <li class="site-footer">O</li>
+          <li class="site-footer">L</li>
+          <li class="site-footer">S</li>
+         </ul>
+        <div class="card" id="content-card">
+          <!-- <div class="nav">
+            <a href="hu-report.html">HU Report</a>
+            <a href="violation.html">Violations</a>
+          </div> -->
+          <div class="glass" id="content-box">
+            <div id="scanner-btn">
+              <button class="button button-scan" id="scan-ticket">
+                Scan Ticket
+              </button>
+            </div>
+
+            <div class="form-row">
+              <label for="ticket-num">Ticket Number</label>
+              <div class="input-clear">
+                <input
+                  type="text"
+                  id="ticket-num"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="10"
+                />
+                <button class="button button-clear button-sm" id="clear-ticket">
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="prod_num">Product Number</label>
+              <div class="input-clear">
+                <input
+                  type="text"
+                  id="prod_num"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="14"
+                />
+                <button class="button button-clear button-sm" id="clear_prod">
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="product_dropdown">Product Numbers (this batch)</label>
+              <select id="product_dropdown">
+                <option value="">-- none yet --</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="code_date">Code Date</label>
+              <div class="input-clear">
+                <input
+                  type="text"
+                  id="code_date"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="6"
+                  placeholder=""
+                />
+                <button class="button button-clear button-sm" id="clear_code">
+                  Clear
+                </button>
+                <div class="hint">Example: MMDDYY</div>
+              </div>
+            </div>
+
+            <div class="form-row" id="layer-row">
+              <label for="layer_count">Layer</label>
+              <div class="input-clear">
+                <input
+                  type="text"
+                  id="layer_count"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="3"
+                />
+                <button class="button button-clear button-sm" id="clear_layer">
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="case_count">Cases</label>
+              <div class="input-clear">
+                <input
+                  type="text"
+                  id="case_count"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="3"
+                />
+                <button class="button button-clear button-sm" id="clear_cases">
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div class="msg error fade-in" id="errors"></div>
+            <div class="msg success flashMsg" id="add-ticket">
+              Ticket Added to Report
+            </div>
+          </div>
+
+          <div class="glass" id="action-box">
+            <button class="button button-confirm" id="add-ticket-btn">
+              Add Ticket
+            </button>
+            <button class="button button-clear" id="clear-all">
+              Clear All
+            </button>
+            <button class="button" id="new_batch">New Batch</button>
+            <button class="button" id="download_btn" disabled>
+              Download Report
+            </button>
+          </div>
+
+          <div class="output">
+            <div class="tabs" id="tabs">
+              <div class="tab-buttons" id="tab_buttons"></div>
+              <div class="tab-content card" id="tab_content"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p>© 2026 Victor Garcia. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="scannerModal" class="modal card">
+      <div class="modal-content">
+        <div id="scanner">
+          <div id="scanOverlay"></div>
+          <!-- overlay box -->
+        </div>
+        <div class="modal-actions">
+          <button id="cancelScan" class="button cancel-btn button-clear">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="batchModal" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>Start New Batch?</h2>
+        <p>
+          This will clear all current tickets and increment the batch number.
+        </p>
+        <div class="modal-actions">
+          <button id="confirmBatch" class="button button-confirm">
+            Confirm
+          </button>
+          <button id="cancelBatch" class="button button-clear">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="batchStartedModal" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>New Batch Started</h2>
+        <p>
+          Batch <span id="batchNumberDisplay"></span> has been created
+          successfully.
+        </p>
+        <div class="modal-actions">
+          <button id="closeBatchStarted" class="button button-confirm">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="overwriteModal" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>Ticket Already Exists</h2>
+        <p>
+          This ticket is already in the report. Do you want to overwrite it?
+        </p>
+        <div class="modal-actions">
+          <button id="confirmOverwrite" class="button button-confirm">
+            Overwrite
+          </button>
+          <button id="cancelOverwrite" class="button button-clear">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="removeRowModal" class="modal">
+      <div class="modal-content frosted-glass">
+        <h2>Remove Ticket?</h2>
+        <p>This will permanently delete the selected ticket from the report.</p>
+        <div class="modal-actions">
+          <button id="confirmRemoveRow" class="button button-confirm">
+            Remove
+          </button>
+          <button id="cancelRemoveRow" class="button button-clear">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="live/reports-live.js"></script>
+  </body>
+</html>
